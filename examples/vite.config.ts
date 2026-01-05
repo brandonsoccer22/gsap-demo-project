@@ -28,7 +28,7 @@ export default defineConfig({
   ],
   appType: "mpa",
   server: {
-    open: "/basic/",
+    open: "/ferrari-slider/index.html",
     fs: {
       allow: [packageRoot]
     }
