@@ -267,7 +267,8 @@ a, a:hover, a:visited {
     position: relative;
     overflow: hidden;          /* needed for the “collapse/wipe” */
     background: transparent;
-    width: fit-content;        /* shrink-wrap to media size so bg matches image */
+    display: inline-block;     /* fallback shrink-wrap for older browsers */
+    width: auto;
     max-width: 100%;
 }
 
@@ -303,8 +304,8 @@ a, a:hover, a:visited {
 .media-picture {
     position: relative;
     z-index: 2;
-    display: block;
-    width: fit-content;
+    display: inline-block;     /* fallback shrink-wrap for older browsers */
+    width: auto;
     max-width: 100%;
     height: auto;
 }
@@ -317,6 +318,18 @@ a, a:hover, a:visited {
     max-width: 100%;
     object-fit: contain;
     will-change: transform, opacity;
+}
+
+@supports (width: fit-content) {
+    .media {
+        display: block;
+        width: fit-content;    /* modern shrink-wrap so bg matches image */
+    }
+
+    .media-picture {
+        display: block;
+        width: fit-content;
+    }
 }
 
 .dot-btn {
