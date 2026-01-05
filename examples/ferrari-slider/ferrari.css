@@ -333,8 +333,8 @@ a, a:hover, a:visited {
 }
 
 .dot-btn {
-    width: 32px;                 /* comfortable hit target */
-    height: 32px;
+    width: 22px;                 /* comfortable hit target */
+    height: 22px;
     padding: 0;
     border: 0;
     background: transparent;
