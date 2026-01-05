@@ -83,3 +83,10 @@ img {
   color: #6a7382;
   margin: 0 0 8px;
 }
+
+@media (prefers-reduced-motion: reduce) {
+  * {
+    animation: none !important;
+    transition: none !important;
+  }
+}
