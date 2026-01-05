@@ -1,5 +1,14 @@
 
-:host, :root {
+body {
+    background-color: #fff;
+    font-size: 13px;
+    letter-spacing: .015em;
+    line-height: 1.5;
+
+}
+
+:host, :root, body {
+    --f-ml-breakpoint: 961px;
     --f-color-global-white: #fff;
     --f-color-global-black: #181818;
     --f-color-global-white-rgb: 255,255,255;
@@ -76,16 +85,50 @@
     --f-color-ui-0: var(--f-color-global-white);
 }
 
-.f-link.f-link--icon .f-link__icon {
-    display: flex;
-    justify-content: center;
-    align-items: center;
+/*
+   Text section rules
+ */
+
+.f-text--headline-m, .f-text--headline-m ::slotted(*) {
+    font-size: 1.5em;
+    font-weight: 500;
+    line-height: 1.25;
 }
 
+
+@media (min-width: 961px) {
+    .f-text--headline-m, .f-text--headline-m ::slotted(*) {
+        font-size: 28px;
+        line-height: 1.2;
+    }
+}
+
+.f-carousel-editorial-item__content {
+    grid-area: text;
+    padding-block: var(--f-space-m);
+}
+
+.f-carousel-editorial-item__content-inner {
+    display: flex;
+    flex-direction: column;
+    gap: var(--f-space-xxs);
+}
+
+.f-carousel-editorial-item__content-inner {
+    @media (min-width: 961px) {
+        gap: var(--f-space-xs);
+    }
+}
+
+
+/*
+  Icon / Link Rules
+ */
+
 .f-icon.f-icon--icon-border {
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
+    /*display: inline-flex;*/
+    /*align-items: center;*/
+    /*justify-content: center;*/
     position: relative;
     width: 40px;
     height: 40px;
@@ -102,11 +145,11 @@
     stroke-dashoffset: calc(119.32 * (1 - var(--f-icon-circle-hover-opacity, 0)));
     transform: rotate(-90deg);
     transform-origin: 50% 50%;
-    transition: stroke-dashoffset 0.2s ease-in, opacity 0.2s;
+    /* No transition on load; only animate on interaction. */
 }
 
 .f-link {
-    all: unset;
+    /*all: unset;*/
     cursor: pointer;
     line-height: 1;
     font-size: 12px;
@@ -142,18 +185,15 @@
     display: flex;
     justify-content: center;
     align-items: center;
-    /*added*/
-    position: relative;
-    width: 140px;
 }
 
 .f-icon__icon {
     position: absolute;
     top: 50%;
     left: 50%;
-    display: flex;
-    align-items: center;
-    justify-content: center;
+    /*display: flex;*/
+    /*align-items: center;*/
+    /*justify-content: center;*/
     transform: translate(-50%, -50%);
 }
 
@@ -175,6 +215,11 @@
     --f-icon-circle-hover-opacity: 1;
 }
 
+.f-link:hover:not([aria-disabled='true']) .f-icon__circle-hover,
+.f-link:focus-visible:not([aria-disabled='true']) .f-icon__circle-hover {
+    transition: stroke-dashoffset 0.2s ease-in, opacity 0.2s;
+}
+
 a, a:hover, a:visited {
     color: var(--f-color-ui-100);
 }
@@ -182,3 +227,158 @@ a, a:hover, a:visited {
 .f-link:hover:not([aria-disabled='true']) .f-link__text:before, .f-link:focus-visible:not([aria-disabled='true']) .f-link__text:before {
     opacity: 1;
 }
+
+/*
+  Text rules
+ */
+
+/*
+  Image rules
+ */
+
+.f-carousel-editorial-item__image {
+    @media (min-width: 961px) {
+        display: flex;
+        align-items: center;
+    }
+}
+
+/*
+  Dots navigation rules
+ */
+
+.f-carousel-editorial__bottom-bar {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: var(--f-space-xs);
+}
+
+.f-carousel-editorial__bottom-bar__dash {
+    width: 4.5rem;
+    border-top: 1px solid var(--f-color-ui-100);
+}
+
+/*
+  Added for demo purposes
+ */
+
+.media {
+    position: relative;
+    overflow: hidden;          /* needed for the “collapse/wipe” */
+    background: transparent;
+    width: fit-content;        /* shrink-wrap to media size so bg matches image */
+    max-width: 100%;
+}
+
+@media (max-width: 960px) {
+    .media {
+        display: flex;
+        justify-content: center;
+    }
+
+    .media-picture {
+        width: auto;
+        max-width: 100%;
+        margin: 0 auto;
+    }
+
+    .media-img {
+        margin: 0 auto;
+    }
+}
+
+/* The gray panel */
+.media-bg {
+    position: absolute;
+    inset: 0;
+    background: #d9d9d9;       /* your gray */
+    opacity: 0;                /* start hidden */
+    transform: scaleX(1);
+    transform-origin: left center;
+    z-index: 1;
+}
+
+/* Picture/image on top of the gray panel */
+.media-picture {
+    position: relative;
+    z-index: 2;
+    display: block;
+    width: fit-content;
+    max-width: 100%;
+    height: auto;
+}
+
+.media-img {
+    display: block;
+    width: auto;
+    height: auto;
+    max-height: 556px;
+    max-width: 100%;
+    object-fit: contain;
+    will-change: transform, opacity;
+}
+
+.dot-btn {
+    width: 32px;                 /* comfortable hit target */
+    height: 32px;
+    padding: 0;
+    border: 0;
+    background: transparent;
+    display: inline-grid;
+    place-items: center;
+    cursor: pointer;
+
+    /* active scale is explicit and reusable */
+    --active-scale: 3
+}
+
+/* ensure expanded circle never clips */
+.dot-btn__svg {
+    width: 24px;
+    height: 24px;
+    overflow: visible;
+}
+
+.dot-btn__circle {
+    /* RESTING STATE */
+    fill: black;
+
+    /* keep stroke always present to prevent flicker */
+    stroke: black;
+    stroke-width: 1;             /* hover thickness */
+    stroke-opacity: 0;           /* hidden at rest */
+
+    vector-effect: non-scaling-stroke;
+
+    transform-box: fill-box;
+    transform-origin: 50% 50%;
+    transform: scale(1);
+
+    transition:
+            transform 0.3s ease,
+            fill 0.3s ease,
+            stroke 0.3s ease,
+            stroke-width 0.2s ease,
+            stroke-opacity 0.2s ease;
+}
+
+/* HOVER (only when NOT active)
+   Small, white fill, thin black ring */
+.dot-btn:not(.is-active):hover .dot-btn__circle {
+    fill: white;
+    stroke: black;
+    stroke-width: 1;
+    stroke-opacity: 1;
+}
+
+/* ACTIVE
+   20px total diameter INCLUDING 2px stroke */
+.dot-btn.is-active .dot-btn__circle {
+    fill: white;
+    stroke: var(--f-color-accent-100);
+    stroke-width: 2;
+    stroke-opacity: 1;
+    transform: scale(var(--active-scale));
+}
+

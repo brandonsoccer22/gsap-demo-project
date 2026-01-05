@@ -1,0 +1,80 @@
+<%
+const carouselSuffix = `${carouselId || "carousel"}-${slideNo || 1}`;
+%>
+<article class="slide is-active relative" data-carousel-slide>
+    <div class="grid grid-rows-[auto_auto] ml:grid-cols-2 ml:grid-rows-1 ml:gap-24">
+        <div class="order-2 ml:order-1">
+            <div class="f-carousel-editorial-item__content h-full flex flex-col justify-center">
+                <div class="f-carousel-editorial-item__content-inner flex flex-col items-start gap-[20px] ml:gap-[40px]">
+                    <div class="header-text">
+                        <h2 class="split-lines-v2 f-text--headline-m" data-exit="split-lines-v2-exit" data-seq="1">
+                            <%= title %>
+                        </h2>
+                    </div>
+                    <div class="fade-up-in subtitle-text" data-exit="fade-down-out" data-seq="1" >
+                        <%= subtitle %>
+                    </div>
+                    <div class="read-more">
+                        <a href="<%= readMoreHref %>"
+                           class="fade-up-in f-link f-link--icon " data-exit="fade-down-out" data-seq="1"
+                        >
+                            <div class="f-link__text">
+                                Read more
+                            </div>
+                            <div class="f-link__icon">
+                      <span class="f-icon f-icon--icon-size-m f-icon--icon-border " >
+                          <svg xmlns="http://www.w3.org/2000/svg" width="40" height="40"
+                               fill="none">
+                            <defs>
+                              <radialGradient id="f-link-circle-gradient-<%= carouselSuffix %>" cx="0" cy="0" r="1"
+                                              gradientTransform="matrix(0 15.0366 -22.7044 0 20 0)"
+                                              gradientUnits="userSpaceOnUse">
+                                <stop stop-color="#303030"></stop>
+                                <stop offset="1" stop-color="#303030" stop-opacity=".01"></stop>
+                              </radialGradient>
+                            </defs>
+
+                            <mask id="f-link-circle-mask-<%= carouselSuffix %>" fill="#fff">
+                              <path d="M0 20C0 8.954 8.954 0 20 0s20 8.954 20 20-8.954 20-20 20S0 31.046 0 20Z"></path>
+                            </mask>
+                            <g class="f-icon__circle">
+                              <path fill="#CDCBCB"
+                                    d="M20 38c-9.941 0-18-8.059-18-18h-4c0 12.15 9.85 22 22 22v-4Zm18-18c0 9.941-8.059 18-18 18v4c12.15 0 22-9.85 22-22h-4ZM20 2c9.941 0 18 8.059 18 18h4C42 7.85 32.15-2 20-2v4Zm0-4C7.85-2-2 7.85-2 20h4c0-9.941 8.059-18 18-18v-4Z"
+                                    mask="url(#f-link-circle-mask-<%= carouselSuffix %>)"></path>
+                              <path fill="url(#f-link-circle-gradient-<%= carouselSuffix %>)" fill-opacity=".6"
+                                    d="M20 38c-9.941 0-18-8.059-18-18h-4c0 12.15 9.85 22 22 22v-4Zm18-18c0 9.941-8.059 18-18 18v4c12.15 0 22-9.85 22-22h-4ZM20 2c9.941 0 18 8.059 18 18h4C42 7.85 32.15-2 20-2v4Zm0-4C7.85-2-2 7.85-2 20h4c0-9.941 8.059-18 18-18v-4Z"
+                                    mask="url(#f-link-circle-mask-<%= carouselSuffix %>)"></path>
+                            </g>
+
+                            <circle class="f-icon__circle-hover" cx="20" cy="20" r="19"
+                                    stroke="#ED1C24" stroke-width="2"
+                                    fill="none"></circle>
+                          </svg>
+
+                        <span class="f-icon__icon">
+                          <svg width="16" height="16" viewBox="0 0 16 16" fill="none"
+                               xmlns="http://www.w3.org/2000/svg"
+                               role="presentation">
+                            <path fill-rule="evenodd" clip-rule="evenodd"
+                                  d="M4 16L11.2677 9.54696C11.7148 9.18016 12 8.62337 12 8C12 7.37664 11.7148 6.81985 11.2677 6.45304L4 0L8 8L4 16Z"></path>
+                          </svg>
+                        </span>
+                    </span>
+                            </div>
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="order-1 ml:order-2">
+            <div class="media media-wipe-in" data-exit="media-wipe-out" data-seq="1" data-exit-seq="1" data-dur="1.5">
+                <div class="media-bg" aria-hidden="true"></div>
+
+                <picture class="media-picture">
+                    <source srcset="<%= imageSrc %>" media="(min-width: 961px)">
+                    <img class="media-img" src="<%= mobileImageSrc %>" alt="<%= imageAlt %>">
+                </picture>
+            </div>
+        </div>
+    </div>
+</article>
