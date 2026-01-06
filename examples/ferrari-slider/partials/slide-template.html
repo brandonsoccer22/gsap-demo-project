@@ -9,8 +9,12 @@ const carouselSuffix = `${carouselId || "carousel"}-${slideNo || 1}`;
                     <div class="header-text">
                         <h2 class="split-lines-v2 f-text--headline-m"
                             data-seq="1"
+                            data-dur="0.65"
+                            data-line-stagger="0.055"
+                            data-stagger="0.018"
                             data-exit="split-lines-v2-exit"
-                            data-dur="1"
+                            data-exit-dur="0.48"
+                            data-exit-stagger="0.018"
                         >
                             <%= title %>
                         </h2>
@@ -18,7 +22,11 @@ const carouselSuffix = `${carouselId || "carousel"}-${slideNo || 1}`;
                     <div class="fade-up-in subtitle-text"
                          data-seq="1"
                          data-exit="fade-down-out"
-                         data-dur="0.5"
+                         data-dur="0.44"
+                         data-exit-dur="0.31"
+                         data-at="0"
+                         data-exit-at="0"
+                         data-blur="2"
                     >
                         <%= subtitle %>
                     </div>
@@ -27,7 +35,11 @@ const carouselSuffix = `${carouselId || "carousel"}-${slideNo || 1}`;
                            class="fade-up-in f-link f-link--icon "
                            data-exit="fade-down-out"
                            data-seq="1"
-                           data-dur="0.5"
+                           data-dur="0.44"
+                           data-exit-dur="0.31"
+                           data-at="0.08"
+                           data-exit-at="0.03"
+                           data-blur="2"
                         >
                             <div class="f-link__text">
                                 Read more
@@ -81,7 +93,7 @@ const carouselSuffix = `${carouselId || "carousel"}-${slideNo || 1}`;
             <div class="media media-wipe-in"
                  data-seq="1"
                  data-exit="media-wipe-out"
-                 data-dur="1.5"
+                 data-dur="1.9"
             >
                 <div class="media-bg" aria-hidden="true"></div>
 

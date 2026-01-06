@@ -72,6 +72,13 @@ const addSplitClass = (list: Element[], className: string): void => {
   list.forEach((node) => node.classList.add(className));
 };
 
+const readDataNumber = (el: Element, name: string, fallback: number): number => {
+  const value = el.getAttribute(name);
+  if (!value) return fallback;
+  const parsed = Number.parseFloat(value);
+  return Number.isFinite(parsed) ? parsed : fallback;
+};
+
 registerAnimation("split-lines-v2", ({ el, tl, gsap, opts }) => {
   const splitLines = new SplitText(el, { type: "lines", autoSplit: true });
   addSplitClass(splitLines.lines, "line");
@@ -84,9 +91,15 @@ registerAnimation("split-lines-v2", ({ el, tl, gsap, opts }) => {
 
   gsap.set(el, { autoAlpha: 1 });
 
+  const lineStagger = readDataNumber(el, "data-line-stagger", 0.06);
+  const wordStagger = readDataNumber(el, "data-stagger", 0.018);
+  const baseDuration = Math.max(0.01, opts.dur);
+  const durationSpread = baseDuration * 0.24;
+
   splitLines.lines.forEach((_, i) => {
     const words = perLine[i]?.words ?? [];
-    const lineStart = (opts.at ?? 0) + i * 0.06;
+    const lineStart = (opts.at ?? 0) + i * lineStagger;
+    const count = Math.max(1, words.length - 1);
 
     tl.fromTo(
       words,
@@ -94,9 +107,23 @@ registerAnimation("split-lines-v2", ({ el, tl, gsap, opts }) => {
       {
         yPercent: 0,
         opacity: 1,
-        duration: Math.max(opts.dur, 0.5),
-        ease: opts.ease ?? "power4.inOut",
-        stagger: { each: 0.03, from: "start" }
+        // duration: Math.max(opts.dur, 0.5),
+        // ease: opts.ease ?? "power4.inOut",
+        // stagger: { each: 0.03, from: "start" }      
+
+        ease: "power4.out",
+
+        //LEFT finishes sooner, RIGHT settles later
+        duration: (index: number ) => {
+          const t = index / count;      // 0 (left) → 1 (right)
+          return baseDuration + t * durationSpread;       // left faster, right slower
+        },
+
+        //LEFT starts first
+        stagger: {
+          each: wordStagger,
+          from: "start"
+        }
       },
       lineStart
     );
@@ -113,18 +140,30 @@ registerAnimation("split-lines-v2-exit", ({ el, tl, opts }) => {
 
   const perLine = splitLines.lines.map((lineEl) => new SplitText(lineEl, { type: "words", autoSplit: true }));
 
+  const lineStagger = readDataNumber(el, "data-exit-line-stagger", readDataNumber(el, "data-line-stagger", 0.06));
+  const wordStagger = readDataNumber(el, "data-exit-stagger", readDataNumber(el, "data-stagger", 0.014));
+  const baseDuration = Math.max(0.01, opts.dur);
+  const durationSpread = baseDuration * 0.26;
+
   splitLines.lines.forEach((_, i) => {
     const words = perLine[i]?.words ?? [];
-    const lineStart = (opts.at ?? 0) + i * 0.06;
+    const lineStart = (opts.at ?? 0) + i * lineStagger;
+    const n = Math.max(1, words.length - 1);
 
     tl.to(
       words,
       {
         yPercent: 90,
         opacity: 0,
-        duration: Math.min(opts.dur, 0.5),
-        ease: opts.ease ?? "power3.inOut",
-        stagger: { each: 0.03, from: "start" }
+        // duration: Math.min(opts.dur, 0.5),
+        // ease: opts.ease ?? "power3.inOut",
+        //stagger: { each: 0.03, from: "start" }
+       ease: "power3.in",
+        duration: (index: number) => {
+          const t = index / n;          // 0 (left) -> 1 (right)
+          return baseDuration + t * durationSpread;       // left faster, right a touch slower
+        },
+        stagger: { each: wordStagger, from: "start" }
       },
       lineStart
     );
@@ -149,7 +188,7 @@ registerAnimation("media-wipe-in", ({ el, tl, opts }) => {
   const imgInDur = total * 0.35;
   const bgOutDur = total * 0.25;
 
-  tl.set(bg, { opacity: 1, scaleX: 0, transformOrigin: "left center" }, start);
+  tl.set(bg, { opacity: 1, xPercent: 0, scaleX: 0, transformOrigin: "left center" }, start);
   tl.set(img, { opacity: 0 }, start);
 
   tl.to(bg, { scaleX: 1, duration: expandDur, ease: "power3.out" }, start);
@@ -174,7 +213,7 @@ registerAnimation("media-wipe-out", ({ el, tl, opts }) => {
 
   tl.to(img, { opacity: 0, duration: fadeOutDur, ease: "power2.out" }, start);
   tl.to(bg, { opacity: 1, duration: bgInDur, ease: "power2.out" }, start + total * 0.1);
-  tl.to(bg, { scaleX: 0, opacity: 0, duration: wipeDur, ease: "power3.inOut" }, start + total * 0.2);
+  tl.to(bg, { scaleX: 0, xPercent: -6, opacity: 0, duration: wipeDur, ease: "power3.inOut" }, start + total * 0.2);
 });
 
 // ready.then(() => {
