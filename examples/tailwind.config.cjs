@@ -8,6 +8,7 @@ module.exports = {
       screens: {
         'xs': '480px', // Adds a new 'xs' breakpoint
         'ml': '961px', // Adds a new 'ml' breakpoint
+        'max-ml': {'max': '960px'}, // Adds a new 'max-ml' breakpoint
         '3xl': '1600px', // Adds a new '3xl' breakpoint
       }
     }
