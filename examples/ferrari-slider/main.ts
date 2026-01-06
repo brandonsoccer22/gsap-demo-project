@@ -210,6 +210,9 @@ const setupUniformSlideHeight = (carouselEl: HTMLElement): (() => void) | undefi
     if (rafId) {
       cancelAnimationFrame(rafId);
     }
+    if (mediaQuery.matches) {
+      stack.style.height = "";
+    }
     rafId = requestAnimationFrame(() => {
       rafId = 0;
       updateHeight();
