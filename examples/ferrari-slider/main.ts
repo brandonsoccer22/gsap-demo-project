@@ -223,54 +223,54 @@ registerAnimation("media-wipe-out", ({ el, tl, opts }) => {
 //   });
 // });
 
-const setupUniformSlideHeight = (carouselEl: HTMLElement): (() => void) | undefined => {
-  const stack = carouselEl.querySelector<HTMLElement>(".gsap-carousel__stack");
-  if (!stack) return;
-
-  const slides = Array.from(stack.querySelectorAll<HTMLElement>("[data-carousel-slide]"));
-  if (!slides.length) return;
-
-  const mediaQuery = window.matchMedia("(max-width: 960px)");
-  let rafId = 0;
-
-  const updateHeight = () => {
-    if (!mediaQuery.matches) {
-      stack.style.height = "";
-      return;
-    }
-
-    const maxHeight = slides.reduce((max, slide) => Math.max(max, slide.offsetHeight), 0);
-    if (maxHeight > 0) {
-      stack.style.height = `${maxHeight}px`;
-    }
-  };
-
-  const schedule = () => {
-    if (rafId) {
-      cancelAnimationFrame(rafId);
-    }
-    if (mediaQuery.matches) {
-      stack.style.height = "";
-    }
-    rafId = requestAnimationFrame(() => {
-      rafId = 0;
-      updateHeight();
-    });
-  };
-
-  const resizeObserver = new ResizeObserver(schedule);
-  slides.forEach((slide) => resizeObserver.observe(slide));
-
-  window.addEventListener("resize", schedule);
-  mediaQuery.addEventListener("change", schedule);
-  schedule();
-
-  return () => {
-    resizeObserver.disconnect();
-    window.removeEventListener("resize", schedule);
-    mediaQuery.removeEventListener("change", schedule);
-  };
-};
+//const setupUniformSlideHeight = (carouselEl: HTMLElement): (() => void) | undefined => {
+  // const stack = carouselEl.querySelector<HTMLElement>(".gsap-carousel__stack");
+  // if (!stack) return;
+  //
+  // const slides = Array.from(stack.querySelectorAll<HTMLElement>("[data-carousel-slide]"));
+  // if (!slides.length) return;
+  //
+  // const mediaQuery = window.matchMedia("(max-width: 960px)");
+  // let rafId = 0;
+  //
+  // const updateHeight = () => {
+  //   if (!mediaQuery.matches) {
+  //     stack.style.height = "";
+  //     return;
+  //   }
+  //
+  //   const maxHeight = slides.reduce((max, slide) => Math.max(max, slide.offsetHeight), 0);
+  //   if (maxHeight > 0) {
+  //     stack.style.height = `${maxHeight}px`;
+  //   }
+  // };
+  //
+  // const schedule = () => {
+  //   if (rafId) {
+  //     cancelAnimationFrame(rafId);
+  //   }
+  //   // if (mediaQuery.matches) {
+  //   //   stack.style.height = "";
+  //   // }
+  //   rafId = requestAnimationFrame(() => {
+  //     rafId = 0;
+  //     updateHeight();
+  //   });
+  // };
+  //
+  // const resizeObserver = new ResizeObserver(schedule);
+  // slides.forEach((slide) => resizeObserver.observe(slide));
+  //
+  // window.addEventListener("resize", schedule);
+  // mediaQuery.addEventListener("change", schedule);
+  // schedule();
+  //
+  // return () => {
+  //   resizeObserver.disconnect();
+  //   window.removeEventListener("resize", schedule);
+  //   mediaQuery.removeEventListener("change", schedule);
+  // };
+//};
 
 document.fonts.ready.then(() => {
   createCarousel("[data-carousel]", {
@@ -282,7 +282,7 @@ document.fonts.ready.then(() => {
 const setupFerrariSliderHeight = () => {
   const ferrariSlider = document.querySelector<HTMLElement>("#ferrari-slider");
   if (ferrariSlider) {
-    setupUniformSlideHeight(ferrariSlider);
+    //setupUniformSlideHeight(ferrariSlider);
   }
 };
 
